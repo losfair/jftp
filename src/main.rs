@@ -11,15 +11,15 @@ use tokio::net::{TcpListener, TcpStream};
 )]
 struct Opt {
   /// The address to listen on.
-  #[structopt(short, long)]
+  #[structopt(short, long, env = "JFTP_LISTEN")]
   listen: String,
 
   /// The address to connect to.
-  #[structopt(short, long)]
+  #[structopt(short, long, env = "JFTP_CONNECT")]
   connect: String,
 
   /// Connect timeout in milliseconds.
-  #[structopt(short, long, default_value = "30000")]
+  #[structopt(short, long, env = "JFTP_TIMEOUT_MS", default_value = "30000")]
   timeout_ms: u64,
 }
 
