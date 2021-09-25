@@ -6,9 +6,13 @@ authors = ["Heyang Zhou <heyang.zhou@icloud.com>"]
 description = "Just Forward The Port"
 license = "MIT"
 repository = "https://github.com/losfair/jftp"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 anyhow = "1"
 tokio = { version = "1", features = ["full"] }
+structopt = "0.3"
+pretty_env_logger = "0.4"
+log = "0.4"
