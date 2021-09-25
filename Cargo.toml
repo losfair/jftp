@@ -1,0 +1,14 @@
+[package]
+name = "jftp"
+version = "0.1.0"
+edition = "2018"
+authors = ["Heyang Zhou <heyang.zhou@icloud.com>"]
+description = "Just Forward The Port"
+license = "MIT"
+repository = "https://github.com/losfair/jftp"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1"
+tokio = { version = "1", features = ["full"] }
