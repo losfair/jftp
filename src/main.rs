@@ -32,7 +32,15 @@ async fn main() -> Result<()> {
   log::info!("Listening on {}.", sock.local_addr()?);
 
   loop {
-    let (mut incoming, peer) = sock.accept().await?;
+    let (incoming, peer) = sock.accept().await?;
+    if let Err(e) = incoming.set_nodelay(true) {
+      log::warn!(
+        "Unable to set TCP_NODELAY on incoming connection {}: {:?}",
+        peer,
+        e
+      );
+    }
+    let mut incoming = incoming;
     log::info!("Accepted connection from {}.", peer);
     let connect = opt.connect.clone();
     let timeout = Duration::from_millis(opt.timeout_ms);
@@ -40,7 +48,14 @@ async fn main() -> Result<()> {
       tokio::select! {
         res = TcpStream::connect(&connect) => {
           match res {
-            Ok(mut backend) => {
+            Ok(backend) => {
+              if let Err(e) = backend.set_nodelay(true) {
+                log::warn!(
+                  "Unable to set TCP_NODELAY on backend connection {}: {:?}",
+                  connect, e
+                );
+              }
+              let mut backend = backend;
               let _ = tokio::io::copy_bidirectional(&mut incoming, &mut backend).await;
             }
             Err(e) => {
